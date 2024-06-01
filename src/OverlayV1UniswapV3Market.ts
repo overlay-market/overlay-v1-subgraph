@@ -5,11 +5,11 @@ import {
   NewPricePoint,
   OverlayV1UniswapV3Market,
   OverlayV1UniswapV3Market__oiResult
-} from "../generated/OverlayV1UniswapV3Market/OverlayV1UniswapV3Market"
+} from "../generated/templates/OverlayV1UniswapV3Market/OverlayV1UniswapV3Market"
 
 import {
   OverlayV1OVLCollateral
-} from "../generated/OverlayV1OVLCollateral/OverlayV1OVLCollateral"
+} from "../generated/templates/OverlayV1OVLCollateral/OverlayV1OVLCollateral"
 
 import {
   loadMarket,

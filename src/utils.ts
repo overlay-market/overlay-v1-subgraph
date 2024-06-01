@@ -2,7 +2,7 @@ import { Address, BigDecimal, BigInt, log } from "@graphprotocol/graph-ts"
 
 import {
   OverlayV1UniswapV3Market,
-} from "../generated/OverlayV1UniswapV3Market/OverlayV1UniswapV3Market"
+} from "../generated/templates/OverlayV1UniswapV3Market/OverlayV1UniswapV3Market"
 
 import {
     Account,
@@ -97,6 +97,7 @@ export function loadPosition(
 		position = new Position(positionId)
 
 		position.collateralManager = collateralManager.address
+    position.market = market
 		position.number = id
 		position.totalSupply = BigInt.fromI32(0)
 

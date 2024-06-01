@@ -9,12 +9,12 @@ import {
   URI,
   Unwind,
   Update,
-} from "../generated/OverlayV1OVLCollateral/OverlayV1OVLCollateral"
+} from "../generated/templates/OverlayV1OVLCollateral/OverlayV1OVLCollateral"
 import {
   OverlayV1UniswapV3Market,
   FundingPaid,
   NewPricePoint
-} from "../generated/OverlayV1UniswapV3Market/OverlayV1UniswapV3Market"
+} from "../generated/templates/OverlayV1UniswapV3Market/OverlayV1UniswapV3Market"
 
 import { 
   Account,

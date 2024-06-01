@@ -3,10 +3,73 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: OverlayV1OVLCollateral
-    network: development
+    name: OverlayV1Mothership
+    # network: development
+    network: mainnet
     source:
-      address: "0xd98Af8C11DaD508183742320664253fae1767042"
+      address: "0x6f49162bC17EbA2B926f789522269A0e0F2A5884"
+      abi: OverlayV1Mothership
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - RoleAdminChanged
+        - RoleGranted
+        - RoleRevoked
+      abis:
+        - name: OverlayV1Mothership
+          file: ./abis/OverlayV1Mothership.json
+      eventHandlers:
+        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
+          handler: handleRoleAdminChanged
+        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleGranted
+        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleRevoked
+        - event: UpdateCollateral(address,bool)
+          handler: handleCollateralUpdate
+        - event: UpdateMarket(address,bool)
+          handler: handleMarketUpdate
+      file: ./src/OverlayV1Mothership.ts
+  - kind: ethereum/contract
+    name: OverlayToken
+    # network: development
+    network: mainnet
+    source:
+      address: "0x04346e29fDef5dc5A7822793d9f00B5db73D6532"
+      abi: OverlayToken
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - RoleAdminChanged
+        - RoleGranted
+        - RoleRevoked
+        - Transfer
+      abis:
+        - name: OverlayToken
+          file: ./abis/OverlayToken.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
+          handler: handleRoleAdminChanged
+        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleGranted
+        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleRevoked
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/OverlayToken.ts
+templates:
+  - kind: ethereum/contract
+    name: OverlayV1OVLCollateral
+    # network: development
+    network: mainnet
+    source:
       abi: OverlayV1OVLCollateral
     mapping:
       kind: ethereum/events
@@ -42,12 +105,11 @@ dataSources:
         - event: Update(uint256,uint256,uint256,uint256)
           handler: handleUpdate
       file: ./src/OverlayV1OVLCollateral.ts
-
   - kind: ethereum/contract
     name: OverlayV1UniswapV3Market
-    network: development
+    # network: development
+    network: mainnet
     source:
-      address: "0x456Ec63c265e151CaB6e6467035e47839cD7EACE"
       abi: OverlayV1UniswapV3Market
     mapping:
       kind: ethereum/events
@@ -71,61 +133,3 @@ dataSources:
       blockHandlers:
         - handler: handleBlock
       file: ./src/OverlayV1UniswapV3Market.ts
-
-  - kind: ethereum/contract
-    name: OverlayV1Mothership
-    network: development
-    source:
-      address: "0xf5183Bd59d78Ba7fA8b03f23E51Eb35B86bB4f14"
-      abi: OverlayV1Mothership
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.5
-      language: wasm/assemblyscript
-      entities:
-        - RoleAdminChanged
-        - RoleGranted
-        - RoleRevoked
-      abis:
-        - name: OverlayV1Mothership
-          file: ./abis/OverlayV1Mothership.json
-      eventHandlers:
-        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
-          handler: handleRoleAdminChanged
-        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
-          handler: handleRoleGranted
-        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
-          handler: handleRoleRevoked
-      file: ./src/OverlayV1Mothership.ts
-
-  - kind: ethereum/contract
-    name: OverlayToken
-    network: development
-    source:
-      address: "0xe94e561a589D44AAAC3a3722E1CaF69618E81c05"
-      abi: OverlayToken
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.5
-      language: wasm/assemblyscript
-      entities:
-        - Approval
-        - RoleAdminChanged
-        - RoleGranted
-        - RoleRevoked
-        - Transfer
-      abis:
-        - name: OverlayToken
-          file: ./abis/OverlayToken.json
-      eventHandlers:
-        - event: Approval(indexed address,indexed address,uint256)
-          handler: handleApproval
-        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
-          handler: handleRoleAdminChanged
-        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
-          handler: handleRoleGranted
-        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
-          handler: handleRoleRevoked
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-      file: ./src/OverlayToken.ts
